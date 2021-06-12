@@ -1,0 +1,30 @@
+{
+  "name": "mvc-in-nod-js",
+  "version": "1.0.0",
+  "description": "Apply MVC by Node JS (models and views and cotroller)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MNaguib2/MVC-In-Nod-JS.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MNaguib2/MVC-In-Nod-JS/issues"
+  },
+  "homepage": "https://github.com/MNaguib2/MVC-In-Nod-JS#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "pug": "^3.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
