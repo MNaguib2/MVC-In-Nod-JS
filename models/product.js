@@ -6,12 +6,16 @@ const path = require('path');
 const rootDir = require('../util/path');
 const p = path.join(rootDir, 'data', 'products.json');
 
+function isEmptyObject(obj) {
+    return !Object.keys(obj).length;
+  }
+
 const getProductFromFile =  cb => {    
         fs.readFile(p, (err, data) => {
-        if(err) {
-            cb([]);
+        if(err || isEmptyObject(data)) {
+           return cb([]);
         }else{
-        cb(JSON.parse(data));
+            cb(JSON.parse(data));
         }
     });
 }
@@ -24,9 +28,12 @@ module.exports = class Product {
         //product.push(this);
 
         getProductFromFile(products => {
+            //console.log("this refere to "+ this );
             products.push(this);
             fs.writeFile(p, JSON.stringify(products), (err) => {
-            console.log(err);
+                if(err){
+                console.log(err);
+                }
             });
         });
 /*  there I will use helper function to use repety code
