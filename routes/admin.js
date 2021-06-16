@@ -2,11 +2,13 @@ const express = require('express');
 
 const router = express.Router();
 
-const productsController = require('../controller/products.js'); 
+const AdminController = require('../controller/admin'); 
 
-  router.get('/add-product', productsController.getAddProduct);
+  router.get('/add-product', AdminController.getAddProduct);
 
-  router.post('/add-product' , productsController.postAddProduct);
+  router.get('/products', AdminController.getProducts);
+
+  router.post('/add-product' , AdminController.postAddProduct);
 
 
 

@@ -21,14 +21,16 @@ const getProductFromFile =  cb => {
 }
 
 module.exports = class Product {
-    constructor(title) {
+    constructor(title, imageUrl, description, price) {
         this.title = title;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.price = price;
     }
     save() {
         //product.push(this);
 
         getProductFromFile(products => {
-            //console.log("this refere to "+ this );
             products.push(this);
             fs.writeFile(p, JSON.stringify(products), (err) => {
                 if(err){

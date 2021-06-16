@@ -4,6 +4,10 @@
     margin: auto;
 }
 
+form:invalid>.btn {
+  pointer-events: none;
+}
+
 .product-item {    
     width: 20rem;
     max-width: 25%;

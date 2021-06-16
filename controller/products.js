@@ -1,7 +1,7 @@
-const Product = require('../models/product');
-
+//const Product = require('../models/product');
+/*
 exports.getAddProduct = (req, res, next) => {
-    res.render('add-product', { 
+    res.render('admin/add-product', { 
     pageTitle: 'Add Product', 
     path: req.baseUrl + req.url,
     productCSS: false,
@@ -14,10 +14,12 @@ exports.getAddProduct = (req, res, next) => {
     //console.log(products);
     res.redirect('/admin');    
 };
+//*/
 
+/*
 exports.getallShop = (req, res, next) => {
   const products = Product.fetchAll((products) => {
-    res.render('shop', {
+    res.render('shop/product-list', {
       prods: products, 
       pageTitle: 'Shop', 
       path: req.baseUrl, 
@@ -35,3 +37,5 @@ exports.getallShop = (req, res, next) => {
     productCSS: false,
     formsCSS: false });
 };
+
+//*/
