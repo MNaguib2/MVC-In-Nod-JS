@@ -4,6 +4,17 @@
 const fs = require('fs');
 const path = require('path');
 const rootDir = require('../util/path');
+const p = path.join(rootDir, 'data', 'products.json');
+
+const getProductFromFile =  cb => {    
+        fs.readFile(p, (err, data) => {
+        if(err) {
+            cb([]);
+        }else{
+        cb(JSON.parse(data));
+        }
+    });
+}
 
 module.exports = class Product {
     constructor(title) {
@@ -11,7 +22,14 @@ module.exports = class Product {
     }
     save() {
         //product.push(this);
-        const p = path.join(rootDir, 'data', 'products.json');
+
+        getProductFromFile(products => {
+            products.push(this);
+            fs.writeFile(p, JSON.stringify(products), (err) => {
+            console.log(err);
+            });
+        });
+/*  there I will use helper function to use repety code
         fs.readFile(p, (err, data) => {
             let products = [];
             if(!err){
@@ -22,8 +40,12 @@ module.exports = class Product {
                 console.log(err);
             })
         });
+        //*/
     }
     static fetchAll(cb) { // write static to makes sure I can call this method directly on the class itself 
+       
+        getProductFromFile(cb);
+        /* this is coped to function helper in name getProductFromFile 
         const p = path.join(rootDir, 'data', 'products.json');
         let products = [];
         fs.readFile(p, (err, data) => {
@@ -32,6 +54,7 @@ module.exports = class Product {
             }
             cb(JSON.parse(data));
         });
+        //*/
     }
 };
 
