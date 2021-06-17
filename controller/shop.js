@@ -31,10 +31,28 @@ exports.getProducts = (req, res, next) => {
           });
       };
 
-      exports.getcheckout = (res, req, next) => {
+      exports.getcheckout = (req, res, next) => {
         res.render('shop/getcheckout', {
-          prods: products, 
           pageTitle: 'Checkout',
           path: req.url
           });
+      };
+      exports.getorder = (req, res, next) => {
+        res.render('shop/orders', {
+          pageTitle: 'Your Orders',
+          path: req.url
+          });
+      };
+
+      exports.getDetials = (req, res, next) => {
+        const productid = req.params.productid;
+        Product.findbyID(productid, product => {
+          console.log(product);
+        });
+        //*
+        res.render('shop/product-detials', {
+          pageTitle: 'Your Orders',
+          path: req.url
+          });
+          //*/
       };
