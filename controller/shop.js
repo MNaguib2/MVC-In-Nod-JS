@@ -47,12 +47,11 @@ exports.getProducts = (req, res, next) => {
       exports.getDetials = (req, res, next) => {
         const productid = req.params.productid;
         Product.findbyID(productid, product => {
-          console.log(product);
+          res.render('shop/product-detials', {
+            pageTitle: 'Your Orders',
+            path: req.url,
+            product : product,
+            path: "/products"
+            });
         });
-        //*
-        res.render('shop/product-detials', {
-          pageTitle: 'Your Orders',
-          path: req.url
-          });
-          //*/
       };
