@@ -31,6 +31,12 @@ exports.getProducts = (req, res, next) => {
           });
       };
 
+      exports.postcardid = (req, res, next) => {
+        const productid = req.body.productId;
+        console.log(productid);
+        res.redirect('/card');
+      }
+
       exports.getcheckout = (req, res, next) => {
         res.render('shop/getcheckout', {
           pageTitle: 'Checkout',
