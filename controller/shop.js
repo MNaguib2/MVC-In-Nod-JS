@@ -1,4 +1,5 @@
 const Product = require('../models/product');
+const card = require('../models/card');
 
 exports.getProducts = (req, res, next) => {
     const products = Product.fetchAll((products) => {
@@ -33,7 +34,9 @@ exports.getProducts = (req, res, next) => {
 
       exports.postcardid = (req, res, next) => {
         const productid = req.body.productId;
-        console.log(productid);
+       Product.findbyID(productid, (product) => {
+        card.addProduct(productid, product.price);
+       });
         res.redirect('/card');
       }
 

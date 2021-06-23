@@ -9,24 +9,37 @@ const p = path.join(
 );
 
 module.exports = class card {
+    /*
     constructor() {
         this.products = [];
         this.totalPrice = 0;
     }
-    static addProduct(id){
+    */
+    static addProduct(id, productPrice){
         // Fetch the previous card
         fs.readFile(p, (err, data) => {
             let card = {products: [], totalPrice: 0};
             if (!err){
-                card = json.parse(data);
+                card = JSON.parse(data);
             }
-            const existingProduct = card.products.find(prod => prod.id === id);
+            // Analyze the => Find existing product
+            const existingProductIndex = card.products.findIndex(prod => prod.id === id);
+            const existingProduct = card.products[existingProductIndex];
             let updateProduct;
             if (existingProduct){
-                updateProduct = 
+                updateProduct = { ...existingProduct }
+                updateProduct.qty = updateProduct.qty + 1;
+                card.products[existingProductIndex] = updateProduct; 
+            } else {
+                updateProduct = { id: id, qty: 1 };
+                card.products = [...card.products, updateProduct];
             }
-        });
-        // Analyze the => Find existing product
+            card.totalPrice = Number(card.totalPrice) + Number(productPrice); 
+            fs.writeFile(p , JSON.stringify(card), err => {
+                console.log(err);
+            });
+                        
+        });        
         // Add new product/ increase quantity 
     }
 

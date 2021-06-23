@@ -25,7 +25,7 @@ module.exports = class Product {
         this.title = title;
         this.imageUrl = imageUrl;
         this.description = description;
-        this.price = price + " $";
+        this.price = price;
     }
     save() {
         //product.push(this);
