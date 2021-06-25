@@ -57,7 +57,7 @@ module.exports = class Product {
         });
         //*/
     }
-//*
+/* thtis is another way to use delete function by another way 
     delete() {
         getProductFromFile(products => {
             const existingproductindex = products.findIndex(prod => prod.id == this.id);
@@ -74,6 +74,17 @@ module.exports = class Product {
         });
     }
     //*/
+
+    static delete(id) {
+        getProductFromFile(products => {
+            const product = products.filter(p => p.id !== id);
+            fs.writeFile(p, JSON.stringify(product), (err) => {
+                if(err){
+                    console.log(err);
+                }
+            });
+        })
+    }
     static fetchAll(cb) { // write static to makes sure I can call this method directly on the class itself 
        
         getProductFromFile(cb);

@@ -22,8 +22,7 @@ exports.getAddProduct = (req, res, next) => {
   exports.postdeleteproduct = (req, res, next) => {
     const productid = req.params.productid;
     if(productid) {
-      const products = new Product (null, null, null, null, productid);
-      products.delete();
+    Product.delete(productid);
       res.redirect('/');
     }
   }
