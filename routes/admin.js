@@ -10,6 +10,8 @@ const AdminController = require('../controller/admin');
 
   router.post('/add-product' , AdminController.postAddProduct);
 
+  router.get('/edite-product/:productid', AdminController.getEditProduct);
+
 
 
 

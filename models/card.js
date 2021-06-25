@@ -36,7 +36,9 @@ module.exports = class card {
             }
             card.totalPrice = Number(card.totalPrice) + Number(productPrice); 
             fs.writeFile(p , JSON.stringify(card), err => {
+                if (err){
                 console.log(err);
+                }
             });
                         
         });        
