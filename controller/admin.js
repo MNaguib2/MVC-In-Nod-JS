@@ -17,8 +17,17 @@ exports.getAddProduct = (req, res, next) => {
         path: req.baseUrl + req.url, 
       });
     });
-  };
-  
+  }
+//*
+  exports.postdeleteproduct = (req, res, next) => {
+    const productid = req.params.productid;
+    if(productid) {
+      const products = new Product (null, null, null, null, productid);
+      products.delete();
+      res.redirect('/');
+    }
+  }
+  //*/
   exports.postAddProduct = (req, res) => {
     const products = new Product (req.body.title, req.body.imageurl, req.body.price, req.body.description);
     products.save();
@@ -28,7 +37,7 @@ exports.getAddProduct = (req, res, next) => {
 
 exports.postEditeProduct = (req, res) => {
   const prodId = req.params.productid;
-  const products = new Product (prodId, req.body.title, req.body.imageurl, req.body.price, req.body.description);
+  const products = new Product (req.body.title, req.body.imageurl, req.body.price, req.body.description, prodId);
   products.save();
   res.redirect('/');    
 };

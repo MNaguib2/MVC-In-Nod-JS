@@ -21,15 +21,14 @@ const getProductFromFile =  cb => {
 }
 
 module.exports = class Product {
-    constructor(id, title, imageUrl, price, description) {
+    constructor(title, imageUrl, price, description, id) {
         this.id = id;
         this.title = title;
         this.imageUrl = imageUrl;
         this.description = description;
         this.price = price;
     }
-    save() {
-        //product.push(this);        
+    save() {        
         getProductFromFile(products => {
             if(this.id){
                 const existingproductindex = products.findIndex(prod => prod.id == this.id);
@@ -58,6 +57,23 @@ module.exports = class Product {
         });
         //*/
     }
+//*
+    delete() {
+        getProductFromFile(products => {
+            const existingproductindex = products.findIndex(prod => prod.id == this.id);
+            console.log(this.id);
+            if (existingproductindex >= 0){
+                console.log(existingproductindex);
+                products.splice(existingproductindex, 1)
+                fs.writeFile(p, JSON.stringify(products), (err) => {
+                    //if(err){
+                        console.log(err);
+                    //}
+                })
+            }
+        });
+    }
+    //*/
     static fetchAll(cb) { // write static to makes sure I can call this method directly on the class itself 
        
         getProductFromFile(cb);

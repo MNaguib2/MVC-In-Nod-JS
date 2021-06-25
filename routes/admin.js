@@ -14,6 +14,8 @@ const AdminController = require('../controller/admin');
 
   router.get('/edite-product/:productid', AdminController.getEditProduct);
 
+  router.post('/delete-product/:productid', AdminController.postdeleteproduct);
+
 
 
 
