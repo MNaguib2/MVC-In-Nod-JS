@@ -26,6 +26,13 @@ exports.getAddProduct = (req, res, next) => {
     res.redirect('/');    
 };
 
+exports.postEditeProduct = (req, res) => {
+  const prodId = req.params.productid;
+  const products = new Product (prodId, req.body.title, req.body.imageurl, req.body.price, req.body.description);
+  products.save();
+  res.redirect('/');    
+};
+
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edite;
   if (!editMode) {

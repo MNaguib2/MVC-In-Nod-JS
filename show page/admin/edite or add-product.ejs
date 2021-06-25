@@ -7,10 +7,9 @@
    <%- include('../layouts/navigation.ejs') %>
 
     <main>
-        <form class="product-form" action="<% if (editing == "true") { %> /edite-product <% } else { %> Add Product <% } %>" method="POST">
+        <form class="product-form" action="<% if (editing == "true") { %> /admin/edite-product/<%= product.id %> <% } else { %> /admin/add-product <% } %>" method="POST">
             <div class="form-control">
                 <label for="title">Title</label>
-        <form class="product-form" action="<% if (editing == "true") { %> /edite-product <% } else { %> Add Product <% } %>" method="POST">
                 <input type="text" name="title" id="title" <%if (editing == "true") {%>value="<%= product.title %>" <% } %> required>
             </div>
             <div class="form-control">
