@@ -59,3 +59,4 @@ exports.getEditProduct = (req, res, next) => {
     });
   });
 };
+

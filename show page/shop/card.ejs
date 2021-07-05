@@ -4,8 +4,22 @@
     <body>
         <%- include('../layouts/navigation.ejs') %>
             <main>
-
+                <% if (products.length> 0) { %>
+                    <ul>
+                    <% products.forEach(product => { %>
+                        <li>
+                            <%= product.productData.title %> (<%= product.qty %>)
+                            <form action="/card-delete-item" method="POST">
+                                <input type="hidden" value="<%= product.productData.id %>" name="productId">
+                                <button class="btn" type="submit">Delete</button>
+                            </form>
+                        </li>
+                    <%}) %>
+                    </ul>
+                <% } else { %>
+                    <h1>No Products in card!!</h1>
+                <% } %>
             </main>
     </body>
 
-</html>
+    </html>
