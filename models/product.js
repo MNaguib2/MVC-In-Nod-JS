@@ -1,9 +1,12 @@
 //const product = []; // this instead of constructor
 
 //to save data in file instead of in array
+//* I not need fs and path becouse I will not work with files and paths anymore
 const fs = require('fs');
 const path = require('path');
+//*/
 const rootDir = require('../util/path');
+const db = require('../util/database');
 const p = path.join(rootDir, 'data', 'products.json');
 
 const Card = require('./card');
@@ -30,6 +33,7 @@ module.exports = class Product {
         this.description = description;
         this.price = price;
     }
+
     save() {
         getProductFromFile(products => {
             if (this.id) {
@@ -58,6 +62,11 @@ module.exports = class Product {
                     })
                 });
                 //*/
+    }
+    saveDB() {
+        return db.execute('INSERT INTO products (title, price, ImageURL, description) VALUES (?, ?, ?, ?)',
+        [this.title, this.price, this.imageUrl, this.description]
+        );
     }
     /* thtis is another way to use delete function by another way 
         delete() {
@@ -91,6 +100,13 @@ module.exports = class Product {
             });
         })
     }
+
+    static fetchAllDB() {
+       return db.execute('SELECT * FROM products');
+    }
+
+
+    //* this when use file to store data base
     static fetchAll(cb) { // write static to makes sure I can call this method directly on the class itself 
 
         getProductFromFile(cb);
@@ -105,12 +121,19 @@ module.exports = class Product {
         });
         //*/
     }
+    
+
+    //* this when use file to store data base
     static findbyID(id, cb) {
         getProductFromFile(products => {
             const product = products.find(p => p.id === id);
             cb(product);
         })
     }
+    //*/
+
+    static findbyIDfromDB(id) {
+        return db.execute('SELECT * FROM products WHERE  products.id = ?', [id]);
 };
 
 /* you can uses this constructure instead of back function it this now also exported
@@ -119,3 +142,4 @@ module.exports = function Product() {
 };
 //*/
 
+}
