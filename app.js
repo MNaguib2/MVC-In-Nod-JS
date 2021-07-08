@@ -47,7 +47,15 @@ app.use((req, res, next) => {
     });
 });
 
-app.listen(3300);
+db.sync()
+.then(result => {
+    //console.log(result);
+    app.listen(3300);
+}).catch(err => {
+    console.log(err);
+});
+
+
 
 
 /*

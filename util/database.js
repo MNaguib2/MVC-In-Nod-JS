@@ -1,3 +1,11 @@
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize('NodeJS', 'root', 'a12345678A', {
+    dialect: 'mysql',
+    host: 'localHost' });
+
+/* this code when use query SQL but now will work by sequelize is easy in write instead of write sql query use sequalize code
+
 const mysql = require('mysql2');
 
 const pool = mysql.createPool({
@@ -8,3 +16,6 @@ const pool = mysql.createPool({
 });
 
 module.exports = pool.promise();
+//*/
+
+module.exports = sequelize;

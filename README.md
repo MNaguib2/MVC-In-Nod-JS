@@ -5,3 +5,4 @@ npm init
 npm install --save express ejs body-parser express-handlebars pug
 npm install --save-dev nodemon
 npm install --save mysql2
+npm install --save sequelize

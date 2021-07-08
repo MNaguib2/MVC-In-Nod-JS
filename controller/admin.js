@@ -1,49 +1,52 @@
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
-    res.render('admin/edite or add-product', { 
-    pageTitle: 'Add Product', 
+  res.render('admin/edite or add-product', {
+    pageTitle: 'Add Product',
     path: req.baseUrl + req.url,
     productCSS: false,
     editing: false,
-    formsCSS: true });
-  };
+    formsCSS: true
+  });
+};
 
-  exports.getProducts = (req, res, next) => {
-    const products = Product.fetchAll((products) => {
-      res.render('admin/products', {
-        prods: products, 
-        pageTitle: 'Admin Products', 
-        path: req.baseUrl + req.url, 
-      });
+exports.getProducts = (req, res, next) => {
+  const products = Product.fetchAll((products) => {
+    res.render('admin/products', {
+      prods: products,
+      pageTitle: 'Admin Products',
+      path: req.baseUrl + req.url,
     });
-  }
+  });
+}
 //*
-  exports.postdeleteproduct = (req, res, next) => {
-    const productid = req.params.productid;
-    if(productid) {
+exports.postdeleteproduct = (req, res, next) => {
+  const productid = req.params.productid;
+  if (productid) {
     Product.delete(productid);
-      res.redirect('/');
-    }
+    res.redirect('/');
   }
-  //*/
-  exports.postAddProduct = (req, res) => {
-    const products = new Product (req.body.title, req.body.imageurl, req.body.price, req.body.description);
-    //products.save();
-    products.saveDB()
-    .then( () => {
-      res.redirect('/');
-    }).catch(err => {
-      console.log(err)
-    });
-    //console.log(products);  
+}
+//*/
+exports.postAddProduct = (req, res) => {
+  Product.create({
+    title: req.body.title,
+    price: req.body.price,
+    ImageUrl: req.body.imageurl,
+    description: req.body.description
+  })
+    .then(result => { 
+      //console.log(result);
+      console.log('create Anew Product sucssful');
+    })
+    .catch(err => { console.log(err) });
 };
 
 exports.postEditeProduct = (req, res) => {
   const prodId = req.params.productid;
-  const products = new Product (req.body.title, req.body.imageurl, req.body.price, req.body.description, prodId);
+  const products = new Product(req.body.title, req.body.imageurl, req.body.price, req.body.description, prodId);
   products.save();
-  res.redirect('/');    
+  res.redirect('/');
 };
 
 exports.getEditProduct = (req, res, next) => {
