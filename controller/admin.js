@@ -1,22 +1,37 @@
 const Product = require('../models/product');
 
-exports.getAddProduct = (req, res, next) => {
-  res.render('admin/edite or add-product', {
-    pageTitle: 'Add Product',
-    path: req.baseUrl + req.url,
-    productCSS: false,
-    editing: false,
-    formsCSS: true
-  });
+exports.getAddediteProduct = (req, res, next) => {
+  const title = ((req.baseUrl + req.url) == '/admin/add-product') ? "Add Product" : "Edit Product";
+  if (req.query.edite === 'false') {
+    return res.redirect('/');
+  }
+  Product.findByPk(req.params.productid)
+  .then(result => {
+    res.render('admin/edite or add-product', {
+      pageTitle: title,
+      path: req.baseUrl + req.url,
+      //productCSS: false,
+      editing: (req.query.edite === 'true'), //(title == 'Add Product') ? false : true,
+      product: result
+      //formsCSS: true
+    });
+  })
+  .catch(err => {
+    console.log(err);
+  });  
 };
 
 exports.getProducts = (req, res, next) => {
-  const products = Product.fetchAll((products) => {
+  Product.findAll()
+  .then(resule => {
     res.render('admin/products', {
-      prods: products,
+      prods: resule,
       pageTitle: 'Admin Products',
       path: req.baseUrl + req.url,
     });
+  })
+  .catch(err => {
+    console.log(err);
   });
 }
 //*
@@ -45,26 +60,21 @@ exports.postAddProduct = (req, res) => {
 exports.postEditeProduct = (req, res) => {
   const prodId = req.params.productid;
   const products = new Product(req.body.title, req.body.imageurl, req.body.price, req.body.description, prodId);
-  products.save();
-  res.redirect('/');
-};
-
-exports.getEditProduct = (req, res, next) => {
-  const editMode = req.query.edite;
-  if (!editMode) {
-    //return res.redirect('/');
-  }
-  const prodId = req.params.productid;
-  Product.findbyID(prodId, product => {
-    if (!product) {
-      return res.redirect('/');
-    }
-    res.render('admin/edite or add-product', {
-      pageTitle: 'Edit Product',
-      path: '/admin/edit-product',
-      editing: editMode,
-      product: product
-    });
+  //Product.findAll({where: {id: req.params.productid}})
+  Product.findByPk(req.params.productid)
+  .then(result => {
+    result.title = req.body.title;
+    result.price = req.body.price;
+    result.description = req.body.description;
+    result.ImageURL = req.body.imageurl;
+    return result.save();
+  })
+  .then(resule => {
+    console.log('UPDATE PRODUCT !');
+    res.redirect('/');
+  })
+  .catch(err => {
+    console.log(err);
   });
 };
 

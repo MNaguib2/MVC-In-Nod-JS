@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 //*/
 const rootDir = require('../util/path');
-const db = require('../util/database');
+const db = require('../util/DataBase SQL');
 const p = path.join(rootDir, 'data', 'products.json');
 
 const Card = require('./card');
@@ -138,6 +138,11 @@ module.exports = class Product {
 
     static findbyIDfromDB(id) {
         return db.execute('SELECT * FROM products WHERE  products.id = ?', [id]);
+};
+
+ UpdateIDfromDB() {
+    return db.execute('UPDATE products SET title = ?, price = ?, ImageURL = ?, description = ? WHERE id = ?', 
+    [this.title, this.price, this.imageUrl, this.description, this.id]);
 };
 
 /* you can uses this constructure instead of back function it this now also exported

@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-const AdminController = require('../controller/admin'); 
+const AdminController = require('../controller/admin Before update sequelize'); 
 
   router.get('/add-product', AdminController.getAddProduct);
 
