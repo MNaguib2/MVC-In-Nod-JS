@@ -38,21 +38,43 @@ exports.getProducts = (req, res, next) => {
 exports.postdeleteproduct = (req, res, next) => {
   const productid = req.params.productid;
   if (productid) {
-    Product.delete(productid);
-    res.redirect('/');
+    Product.findByPk(productid)
+    .then(result => {
+      return result.destroy();
+    })
+    .then(result =>  {
+      console.log('DELETED PRODUCT IS DONE!!');
+      res.redirect('/');
+    })
+    .catch(err => {
+      console.log(err);
+    });
+    //Product.delete(productid); // this when use old code work with file.json
   }
 }
 //*/
 exports.postAddProduct = (req, res) => {
+  console.log(req.user.id);
+  // this is way to add new product in sequelize but exsit assoication 
+  req.user.createProduct({
+    title: req.body.title,
+    price: req.body.price,
+    ImageURL: req.body.imageurl,
+    description: req.body.description
+    })
+    /* this is create new item by sequelize but not assoication 
   Product.create({
     title: req.body.title,
     price: req.body.price,
-    ImageUrl: req.body.imageurl,
+    ImageURL: req.body.imageurl,
     description: req.body.description
+    userid : req.user.id
   })
+  //*/
     .then(result => { 
       //console.log(result);
       console.log('create Anew Product sucssful');
+      res.redirect('/admin/products');
     })
     .catch(err => { console.log(err) });
 };

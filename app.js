@@ -15,6 +15,9 @@ const routershop = require('./routes/shop');
 
 const productsController = require('./controller/products.js');
 
+const Product = require('./models/product');
+const User = require('./models/user');
+
 /*  this is just testing code 
 db.execute('SELECT * FROM products')
     .then(result => {
@@ -29,13 +32,22 @@ app.set('view engine', 'ejs');
 
 app.set('views', 'show page');
 
+app.use((req, res, next) => {
+  User.findByPk(1)    
+    .then(user => {      
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+});
+
 app.use(BodyParser.urlencoded({ extended: false }));
 
 app.use('/admin', adminData);
 app.use(routershop);
 
 const path = require('path');
-app.use(express.static(path.join(rootDir, 'public')));
+app.use(express.static(path.join(rootDir, 'public'))); // to direcct to folder css 
 
 app.use((req, res, next) => {
     res.status(404).render('page 404', {
@@ -47,13 +59,29 @@ app.use((req, res, next) => {
     });
 });
 
-db.sync()
-.then(result => {
-    //console.log(result);
+Product.belongsTo(User, { constrains: true, onDelete: 'CASCADE' });
+User.hasMany(Product);
+
+//db.sync({force: true}) // force to overwrite my table 
+db
+.sync()
+  .then(result => {
+    return User.findByPk(1);
+    // console.log(result);
+  })
+  .then(user => {
+    if (!user) {
+      return User.create({ name: 'mena afefe', email: 'mena_afefe3000@yahoo.com' });
+    }
+    return user;
+  })
+  .then(user => {
+    // console.log(user);
     app.listen(3300);
-}).catch(err => {
+  })
+  .catch(err => {
     console.log(err);
-});
+  });
 
 
 

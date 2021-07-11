@@ -1,7 +1,20 @@
 const Product = require('../models/product');
 const card = require('../models/card');
+const User = require('../models/user');
 
 exports.getIndex = (req, res, next) => {
+   /*
+    User.findByPk(1)
+    .then(user => {
+      req.user = user;
+      //next();
+      console.log(req.user);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+    */
+    console.log(req.user);
     Product.findAll()
     .then(result => {
         res.render('shop/index', {
