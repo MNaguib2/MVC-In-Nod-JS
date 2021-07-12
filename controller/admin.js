@@ -22,7 +22,8 @@ exports.getAddediteProduct = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  //Product.findAll() // this is when no assoication
+  req.user.getProducts()
   .then(resule => {
     res.render('admin/products', {
       prods: resule,
@@ -83,8 +84,13 @@ exports.postEditeProduct = (req, res) => {
   const prodId = req.params.productid;
   const products = new Product(req.body.title, req.body.imageurl, req.body.price, req.body.description, prodId);
   //Product.findAll({where: {id: req.params.productid}})
-  Product.findByPk(req.params.productid)
+  //Product.findByPk(req.params.productid) // this is sequelize but not associaton
+  req.user.getProducts({where: {id: prodId}})
   .then(result => {
+    const product = result[0];
+    if(!product){
+      res.redirect('/');
+    }
     result.title = req.body.title;
     result.price = req.body.price;
     result.description = req.body.description;

@@ -1,6 +1,7 @@
 const Product = require('../models/product');
 const card = require('../models/card');
 const User = require('../models/user');
+const exphbs = require('express-handlebars');
 
 exports.getIndex = (req, res, next) => {
    /*
@@ -14,7 +15,7 @@ exports.getIndex = (req, res, next) => {
         console.log(err);
     })
     */
-    console.log(req.user);
+    //console.log(req.user);
     Product.findAll()
     .then(result => {
         res.render('shop/index', {
@@ -66,3 +67,20 @@ exports.getDetials = (req, res, next) => {
     });
     //*/
 }
+exports.getCard = (req, res, next) => {
+    console.log('this is new way ', req.user.card);
+    req.user.getCard()
+    .then(card => {
+        //console.log(card);
+        return card.getProducts()
+        .then(product => {
+            res.render('shop/card', {
+                pageTitle: 'Your Cart',
+                path: req.url,
+                products : product
+                });
+        })
+        .catch(err => console.log(err));
+    })
+    .catch(err => console.log(err));
+};
