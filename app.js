@@ -19,6 +19,8 @@ const Product = require('./models/product');
 const User = require('./models/user');
 const card = require('./models/card');
 const carditem = require('./models/cardItem');
+const Order = require('./models/order');
+const Orderitem = require('./models/orderitem');
 
 /*  this is just testing code 
 db.execute('SELECT * FROM products')
@@ -67,6 +69,10 @@ User.hasOne(card);
 card.belongsTo(User);
 card.belongsToMany(Product, {through: carditem});
 Product.belongsToMany(card, {through: carditem});
+Order.belongsTo(User);
+User.hasMany(Order);
+Order.belongsToMany(Product, {through: Orderitem});
+Product.belongsToMany(Order, {through: Orderitem}); // but we can deprecated this line not important write inverse
 
 //db.sync({force: true}) // force to overwrite my table 
 db.sync()
@@ -84,7 +90,7 @@ db.sync()
   .then(user => {
     return user.createCard();
   })
-  */
+  //*/
   .then(result => {
     app.listen(3300);
   })
