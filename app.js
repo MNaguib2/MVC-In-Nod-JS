@@ -92,7 +92,7 @@ db.sync()
   })
   //*/
   .then(result => {
-    app.listen(3300);
+    app.listen(3600);
   })
   .catch(err => {
     console.log(err);
