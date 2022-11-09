@@ -67,11 +67,13 @@ exports.getDetials = (req, res, next) => {
     //*/
 }
 exports.getCard = (req, res, next) => {
-    console.log('this is new way ', req.user);
+    //console.log('this is new way ', req.user);
     req.user.getCard()
         .then(card => {
+            console.log(card);
             return card.getProducts()
                 .then(product => {
+                    
                     res.render('shop/card', {
                         pageTitle: 'Your Cart',
                         path: req.url,

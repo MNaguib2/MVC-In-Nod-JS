@@ -74,6 +74,21 @@ User.hasMany(Order);
 Order.belongsToMany(Product, {through: Orderitem});
 Product.belongsToMany(Order, {through: Orderitem}); // but we can deprecated this line not important write inverse
 
+/*
+CASCADE will propagate the change when the parent changes. 
+(If you delete a row, rows in constrained tables that reference that row will also be deleted, etc.)
+
+SET NULL sets the column value to NULL when a parent row goes away.
+
+RESTRICT causes the attempted DELETE of a parent row to fail.
+
+EDIT: You didn't ask about them, but the SQL standard defines two other actions: SET DEFAULT and NO ACTION.
+ In MySQL, NO ACTION is equivalent to RESTRICT. (In some DBMSs, NO ACTION is a deferred check, 
+  but in MySQL all checks are immediate.) The MySQL parser accepts SET DEFAULT, 
+  but both the InnoDB and NDB engines reject those statements, 
+  so SET DEFAULT can't actually be used for either an ON UPDATE or ON DELETE constraint. 
+// */
+
 //db.sync({force: true}) // force to overwrite my table 
 db.sync()
   .then(result => {
