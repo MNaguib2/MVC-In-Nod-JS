@@ -107,7 +107,9 @@ db.sync()
   })
   //*/
   .then(result => {
-    app.listen(3600);
+    app.listen(3600, () => {
+      console.log(`server listening on http://localhost:3600`);      
+    });
   })
   .catch(err => {
     console.log(err);

@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const sequelize = new Sequelize('NodeJS', 'root', 'a12345678A', {
+const sequelize = new Sequelize('NodeJS', 'root', '', {
     dialect: 'mysql',
     host: 'localHost' ,
     logging: false // this code to hide all query sequalize 
